@@ -48,7 +48,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FF84D6',
     lineHeight: 20,
-  }
+  },
+
+  noteButton: {
+    height: 150,
+    width: '48%',
+    backgroundColor: '#333',
+    borderRadius: 8,
+    padding: 24,
+    justifyContent: 'space-between',
+  },
 });
 
 export default styles;
