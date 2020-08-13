@@ -14,12 +14,12 @@ export default function App() {
 
   if (!fontsLoaded) {
     return <AppLoading />
+  } else {
+    return (
+      <>
+        <Routes />
+        <StatusBar barStyle="dark-content" backgroundColor="#E1B9E1" translucent />
+      </>
+    );
   }
-
-  return (
-    <>
-      <Routes />
-      <StatusBar barStyle="dark-content" backgroundColor="#E0C5DF" translucent />
-    </>
-  );
 }
