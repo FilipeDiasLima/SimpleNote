@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TextInput, ScrollView } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -9,20 +8,17 @@ import NoteItem from '../../components/NoteItem';
 import styles from './styles';
 
 export default function NotesList() {
+
+
   return (
     <View style={styles.content}>
-      <LinearGradient colors={['#DFC4DF', '#ECD3DD']} style={styles.linearGradient}>
+      <LinearGradient colors={['#E1B9E1', '#CCA2B3']} style={styles.linearGradient}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.noteList}>
             <Text style={styles.titlePage}>Your Notes</Text>
             <View style={styles.itens}>
               <NoteItem />
-              <NoteItem />
-              <NoteItem />
-              <NoteItem />
-              <NoteItem />
-              <NoteItem />
-              <NoteItem />
+
             </View>
           </View>
 

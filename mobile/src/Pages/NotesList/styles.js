@@ -26,8 +26,10 @@ const styles = StyleSheet.create({
     marginVertical: 58,
   },
 
+
+
   bottomBar: {
-    backgroundColor: '#D7A2C5',
+    backgroundColor: '#F1BDE0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
 
   searchButton: {
     padding: 19,
+    marginRight: 5,
   },
 
 });
