@@ -2,7 +2,7 @@
   <img src="./images/SimpleNote.png" width="400" />
 </h1>
 
-<h5 align="center">Simple Note is a note app project, to improve and lear react native practices</h5>
+<h5 align="center">SimpleNote is a note app project, to improve and lear react native practices</h5>
 
 <br/>
 
