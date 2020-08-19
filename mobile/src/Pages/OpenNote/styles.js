@@ -35,18 +35,23 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     backgroundColor: '#FFF',
-    width: 137,
-    justifyContent: 'space-between',
+    justifyContent: "center",
     alignItems: 'center',
     borderRadius: 10,
   },
 
   editIcon: {
-    padding: 12,
+    padding: 20,
+    marginRight: 7,
+  },
+
+  line: {
+    height: '100%',
   },
 
   deleteIcon: {
-    padding: 12,
+    padding: 20,
+    marginLeft: 7,
   },
 });
 
