@@ -1,47 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
 export default function NoteItem() {
   const { navigate } = useNavigation();
-  const [note, setNote] = useState([]);
 
-  const readData = async () => {
-    try {
-      const noteArray = await AsyncStorage.getItem(STORAGE_KEY);
 
-      if (noteArray !== null) {
-        setNote(noteArray)
-      }
-    } catch (err) {
-      alert('Failed to fetch the data from storage');
-    }
-  }
-
-  useEffect(() => {
-    readData()
-  }, [setNote])
+  const [note, setNote] = useState('');
+  const [title, setTitle] = useState('');
 
   function handleOpenNote() {
     navigate('OpenNote')
   }
+
+  function loadNotes() {
+    AsyncStorage.getItem('notes').then(response => {
+      if (response) {
+        const savedNotes = JSON.parse(response);
+
+        setTitle(savedNotes[0]);
+        setNote(savedNotes[1]);
+      }
+    })
+  }
+
+  useFocusEffect(() => {
+    loadNotes();
+  }, [])
+
   return (
     <RectButton onPress={handleOpenNote} style={styles.content}>
 
-      <Text style={styles.titleNote}>Title note</Text>
+      <TextInput
+        style={styles.titleNote}
+        multiline={false}
+        placeholder="Title note"
+        autoCorrect={false}
+        blurOnSubmit={false}
+        editable={false}
+        value={title}
+        onChangeText={text => setTitle(text)}
+      />
 
       <View style={styles.noteContent}>
-        <Text style={styles.textNote}>
-          Lorem Ipsum is simply dummy text of the
-          printing and typesetting industry. Lorem Ipsum
-          has been the industry's standard dummy text
-          ever since the 1500s, when an unknown printer
-          took a galley of type and scrambled it to make
-          a type specimen book.
-        </Text>
+        <TextInput
+          style={styles.textNote}
+          multiline={true}
+          placeholder="Write your note"
+          numberOfLines={6}
+          autoCorrect={false}
+          blurOnSubmit={false}
+          editable={false}
+          textAlignVertical={'top'}
+          value={note}
+          onChangeText={text => setNote(text)}
+        />
+
       </View>
       <View style={styles.footer}>
         <Text style={styles.hour}>19:03</Text>

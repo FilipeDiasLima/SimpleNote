@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, View, Image, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,17 +18,21 @@ export default function AddNote() {
   const [note, setNote] = useState('');
   const [title, setTitle] = useState('');
 
-  const STORAGE_KEY = '@save_note';
+  function verconsole() {
+    console.log(note);
+  }
 
-  const saveData = async () => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, title);
-      await AsyncStorage.setItem(STORAGE_KEY, note);
+  async function handleSaveNote() {
+    const notes = await AsyncStorage.getItem('notes');
 
-      alert('Note successfully saved');
-    } catch (err) {
-      alert('Failed to save the note to the storage');
-    }
+    let noteArray = []
+
+    noteArray.push(title)
+    noteArray.push(note)
+
+    console.log(noteArray);
+    await AsyncStorage.setItem('notes', JSON.stringify(noteArray));
+
   }
 
   function cancelNote() {
@@ -77,7 +81,7 @@ export default function AddNote() {
             </View>
 
             <View style={styles.buttons}>
-              <RectButton onPress={saveData} tyle={styles.checkIcon}>
+              <RectButton onPress={handleSaveNote} style={styles.checkIcon}>
                 <Image source={checkIcon} />
               </RectButton>
 

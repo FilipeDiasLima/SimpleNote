@@ -3,6 +3,7 @@ import { View, Text, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import NoteItem from '../../components/NoteItem';
 
@@ -11,9 +12,16 @@ import styles from './styles';
 export default function NotesList() {
   const { navigate } = useNavigation();
 
+  const [newNotes, setNewNotes] = useState([]);
 
+  async function handleAddNewNoteItem() {
+    const noteItem = await AsyncStorage.getItem('noteItem');
 
-  function handleAddNote() {
+    let noteArr = []
+
+    noteArr.push(newNotes)
+
+    await AsyncStorage.setItem('noteItem', JSON.stringify(noteArr));
     navigate('AddNote')
   }
 
@@ -34,7 +42,7 @@ export default function NotesList() {
 
         <View style={styles.bottomBar}>
 
-          <Ionicons onPress={handleAddNote} style={styles.addButton} name="ios-add" color="#373737" size={40} />
+          <Ionicons onPress={handleAddNewNoteItem} style={styles.addButton} name="ios-add" color="#373737" size={40} />
 
           <TextInput
             placeholder='Search...'
