@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-
 
 import styles from './styles';
 
 export default function NoteItem() {
   const { navigate } = useNavigation();
+  const [note, setNote] = useState([]);
+
+  const readData = async () => {
+    try {
+      const noteArray = await AsyncStorage.getItem(STORAGE_KEY);
+
+      if (noteArray !== null) {
+        setNote(noteArray)
+      }
+    } catch (err) {
+      alert('Failed to fetch the data from storage');
+    }
+  }
+
+  useEffect(() => {
+    readData()
+  }, [setNote])
 
   function handleOpenNote() {
     navigate('OpenNote')
