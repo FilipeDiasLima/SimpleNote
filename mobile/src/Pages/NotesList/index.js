@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import NoteItem from '../../components/NoteItem';
 
 import styles from './styles';
 
 export default function NotesList() {
+  const { navigate } = useNavigation();
 
+
+
+  function handleAddNote() {
+    navigate('AddNote')
+  }
 
   return (
     <View style={styles.content}>
@@ -27,7 +34,7 @@ export default function NotesList() {
 
         <View style={styles.bottomBar}>
 
-          <Ionicons style={styles.addButton} name="ios-add" color="#373737" size={40} />
+          <Ionicons onPress={handleAddNote} style={styles.addButton} name="ios-add" color="#373737" size={40} />
 
           <TextInput
             placeholder='Search...'
