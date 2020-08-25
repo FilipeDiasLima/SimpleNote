@@ -23,16 +23,17 @@ export default function AddNote() {
   }
 
   async function handleSaveNote() {
-    const notes = await AsyncStorage.getItem('notes');
-
     let noteArray = []
 
     noteArray.push(title)
     noteArray.push(note)
 
-    console.log(noteArray);
-    await AsyncStorage.setItem('notes', JSON.stringify(noteArray));
+    await AsyncStorage.setItem('@NoteItem', JSON.stringify(noteArray));
 
+    setNote('');
+    setTitle('');
+
+    navigate('NotesList');
   }
 
   function cancelNote() {

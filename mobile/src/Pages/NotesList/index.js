@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,18 +11,16 @@ import styles from './styles';
 
 export default function NotesList() {
   const { navigate } = useNavigation();
-
-  const [newNotes, setNewNotes] = useState([]);
+  const [newNote, setNewNote] = useState([]);
 
   async function handleAddNewNoteItem() {
-    const noteItem = await AsyncStorage.getItem('noteItem');
+    const addNewNote = await AsyncStorage.getItem('@NoteItem');
+    if (addNewNote) {
+      const newNoteTemp = JSON.parse(addNewNote);
+      setNewNote([...newNote, newNoteTemp]);
+    }
 
-    let noteArr = []
-
-    noteArr.push(newNotes)
-
-    await AsyncStorage.setItem('noteItem', JSON.stringify(noteArr));
-    navigate('AddNote')
+    navigate('AddNote');
   }
 
   return (
@@ -32,7 +30,14 @@ export default function NotesList() {
           <View style={styles.noteList}>
             <Text style={styles.titlePage}>Your Notes</Text>
             <View style={styles.itens}>
-              <NoteItem />
+
+              {newNote.map(note => {
+                return (
+                  <NoteItem
+                    key={note.Title}
+                  />
+                )
+              })}
 
             </View>
           </View>

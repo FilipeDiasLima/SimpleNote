@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -9,9 +9,28 @@ import styles from './styles';
 export default function NoteItem() {
   const { navigate } = useNavigation();
 
-
   const [note, setNote] = useState('');
   const [title, setTitle] = useState('');
+
+  // renderizar cada note
+  const [singleNote, setSingleNote] = useState([]);
+  // renderizar a listagem de notes
+  const [newNotes, setNewNotes] = useState([]);
+
+  async function handleToggleNote() {
+    const note = await AsyncStorage.getItem('@NoteItem');
+
+    if (note) {
+      const arrGetItem = JSON.parse(note);
+      let noteArr = [arrGetItem[0], arrGetItem[1]];
+      setTitle(noteArr[0]);
+      setNote(noteArr[1]);
+    }
+  }
+
+  useEffect(() => {
+    handleToggleNote();
+  }, [setTitle || setNote]);
 
   function handleOpenNote() {
     navigate('OpenNote')
