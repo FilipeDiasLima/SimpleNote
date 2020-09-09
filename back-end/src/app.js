@@ -1,12 +1,18 @@
-const express = require('express');
-const routes = require('./routes');
+const express = require("express");
+const routes = require("./routes");
+const cors = require("cors");
 
 class App {
   constructor() {
     this.server = express();
 
     this.server.use(express.json());
+    this.middlewares();
     this.routes();
+  }
+
+  middlewares() {
+    this.server.use(cors());
   }
 
   routes() {
