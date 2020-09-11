@@ -17,6 +17,7 @@ import checkIcon from "../../../assets/checkmark-outline.png";
 import closeIcon from "../../../assets/close-circle-outline.png";
 import line from "../../../assets/line.png";
 
+import noteStyles from "../../styles/noteStyles";
 import styles from "./styles";
 
 export default function AddNote() {
@@ -53,9 +54,9 @@ export default function AddNote() {
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <View style={styles.noteItem}>
-            <View style={styles.noteContent}>
+            <View style={noteStyles.contentNote}>
               <TextInput
-                style={styles.titleNote}
+                style={noteStyles.titleNote}
                 placeholder="Title note"
                 value={title}
                 onChangeText={(text) => setTitle(text)}
@@ -63,7 +64,7 @@ export default function AddNote() {
               />
 
               <TextInput
-                style={styles.textNote}
+                style={noteStyles.textNote}
                 placeholder="Write your note..."
                 value={note}
                 onChangeText={(text) => setNote(text)}
@@ -76,18 +77,17 @@ export default function AddNote() {
                 textAlignVertical={"top"}
               />
             </View>
+          </View>
+          <View style={styles.buttons}>
+            <RectButton onPress={createNewNote} style={styles.checkIcon}>
+              <Image source={checkIcon} />
+            </RectButton>
 
-            <View style={styles.buttons}>
-              <RectButton onPress={createNewNote} style={styles.checkIcon}>
-                <Image source={checkIcon} />
-              </RectButton>
+            <Image style={styles.line} source={line} />
 
-              <Image style={styles.line} source={line} />
-
-              <RectButton onPress={cancelNote} style={styles.closeIcon}>
-                <Image source={closeIcon} />
-              </RectButton>
-            </View>
+            <RectButton onPress={cancelNote} style={styles.closeIcon}>
+              <Image source={closeIcon} />
+            </RectButton>
           </View>
         </KeyboardAvoidingView>
       </LinearGradient>

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   content: {
@@ -10,15 +10,15 @@ const styles = StyleSheet.create({
   },
 
   topInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 37,
     paddingTop: 66,
   },
 
   titleNoteInfo: {
-    fontFamily: 'Overlock_700Bold',
-    color: '#061B50',
+    fontFamily: "Overlock_700Bold",
+    color: "#061B50",
     lineHeight: 37,
     fontSize: 30,
     left: 75,
@@ -27,49 +27,16 @@ const styles = StyleSheet.create({
   noteItem: {
     marginVertical: 58,
     paddingHorizontal: 37,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
-  noteContent: {
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    paddingHorizontal: 29,
-    paddingVertical: 17,
-
-    shadowColor: '#fff',
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 10,
-    marginBottom: 36,
-    minWidth: 340,
-    minHeight: 113,
-
-  },
-
-  titleNote: {
-    fontFamily: 'Overlock_700Bold',
-    fontSize: 24,
-    color: '#061B50',
-  },
-
-  textNote: {
-    fontFamily: 'Overlock_400Regular',
-    fontSize: 16,
-    color: '#142349',
-    lineHeight: 20,
-    marginVertical: 14,
-    maxHeight: 455,
-    maxWidth: 292,
-    alignSelf: 'baseline'
   },
 
   buttons: {
     marginTop: 20,
-    flexDirection: 'row',
-    backgroundColor: '#FFF',
+    maxWidth: "40%",
+    alignSelf: "center",
+    flexDirection: "row",
+    backgroundColor: "#FFF",
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 10,
   },
 
@@ -79,7 +46,7 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    height: '100%',
+    height: "100%",
   },
 
   closeIcon: {
