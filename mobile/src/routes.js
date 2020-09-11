@@ -6,10 +6,6 @@ import NotesList from "./Pages/NotesList";
 import AddNote from "./Pages/AddNote";
 import OpenNote from "./Pages/OpenNote";
 
-// import EditNote from './Pages/EditNote'
-//
-// <Screen name="EditNote" component={EditNote} />
-
 const { Navigator, Screen } = createStackNavigator();
 
 function Routes() {

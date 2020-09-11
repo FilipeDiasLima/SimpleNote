@@ -7,6 +7,7 @@ import { RectButton } from "react-native-gesture-handler";
 import api from "../../services/api";
 
 import styles from "./styles";
+import noteStyles from "../../styles/noteStyles";
 
 export default function NotesList() {
   const { navigate } = useNavigation();
@@ -22,6 +23,10 @@ export default function NotesList() {
     navigate("AddNote");
   }
 
+  async function handleOpenNote(id) {
+    navigate("OpenNote", { id });
+  }
+
   return (
     <View style={styles.content}>
       <LinearGradient
@@ -33,15 +38,21 @@ export default function NotesList() {
             <Text style={styles.titlePage}>Your Notes</Text>
             <View style={styles.itens}>
               {notes.map((note) => (
-                <RectButton key={note.id} style={styles.contentNote}>
-                  <Text style={styles.titleNote}>{note.title}</Text>
+                <RectButton
+                  key={note.id}
+                  onPress={() => handleOpenNote(note.id)}
+                  style={noteStyles.contentNote}
+                >
+                  <Text style={noteStyles.titleNote}>{note.title}</Text>
 
-                  <View style={styles.noteContent}>
-                    <Text style={styles.textNote}>{note.note}</Text>
+                  <View style={noteStyles.noteContent}>
+                    <Text style={noteStyles.textNote} numberOfLines={6}>
+                      {note.note}
+                    </Text>
                   </View>
-                  <View style={styles.footer}>
-                    <Text style={styles.hour}>19:03</Text>
-                    <Text style={styles.date}>20/10/2019</Text>
+                  <View style={noteStyles.footer}>
+                    <Text style={noteStyles.hour}>19:03</Text>
+                    <Text style={noteStyles.date}>20/10/2019</Text>
                   </View>
                 </RectButton>
               ))}

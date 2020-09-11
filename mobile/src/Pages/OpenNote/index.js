@@ -1,25 +1,45 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, Image, TextInput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import api from "../../services/api";
 
-import editIcon from "../../../assets/create-outline.png";
+import saveIcon from "../../../assets/checkmark-outline.png";
 import deleteIcon from "../../../assets/trash-outline.png";
 import line from "../../../assets/line.png";
 
 import styles from "./styles";
+import noteStyles from "../../styles/noteStyles";
 
 export default function OpenNote() {
-  const { navigate } = useNavigation();
+  const route = useRoute();
+  const { navigate, goBack } = useNavigation();
+
+  const [data, setData] = useState([]);
+  const [newTitle, setNewTitle] = useState("");
+  const [newNote, setNewNote] = useState("");
+
+  const routeParams = route.params;
+
+  useEffect(() => {
+    api.get(`notes/${routeParams.id}`).then((response) => {
+      setData(response.data);
+    });
+  }, []);
+
+  if (!data.note && !data.title) {
+    return null;
+  }
 
   function handleGoBack() {
     navigate("NotesList");
   }
 
-  function handleOpenEditNote() {
-    navigate("EditNote");
+  function handleDeleteNote(id) {
+    api.delete(`notes/${id}`).then();
+    goBack();
   }
 
   return (
@@ -37,17 +57,56 @@ export default function OpenNote() {
         </View>
 
         <View style={styles.noteItem}>
-          <View style={styles.buttons}>
-            <RectButton onPress={handleOpenEditNote} style={styles.editIcon}>
-              <Image source={editIcon} />
-            </RectButton>
+          <View style={noteStyles.contentNote}>
+            <TextInput
+              style={noteStyles.titleNote}
+              autoCorrect={false}
+              blurOnSubmit={false}
+              editable={true}
+              value={newTitle}
+              onChangeText={(text) => setNewTitle(text)}
+            >
+              {data.title}
+            </TextInput>
 
-            <Image style={styles.line} source={line} />
-
-            <RectButton style={styles.deleteIcon}>
-              <Image source={deleteIcon} />
-            </RectButton>
+            <View style={noteStyles.noteContent}>
+              <TextInput
+                style={noteStyles.textNote}
+                multiline={true}
+                numberOfLines={15}
+                autoCorrect={false}
+                blurOnSubmit={false}
+                editable={true}
+                textAlignVertical={"top"}
+                value={newNote}
+                onChangeText={(text) => setNewNote(text)}
+              >
+                {data.note}
+              </TextInput>
+            </View>
+            <View style={noteStyles.footer}>
+              <Text style={noteStyles.hour}>19:03</Text>
+              <Text style={noteStyles.date}>20/10/2019</Text>
+            </View>
           </View>
+        </View>
+
+        <View style={styles.buttons}>
+          <RectButton
+            onPress={() => handleEditNoteSave(data.id)}
+            style={styles.saveIcon}
+          >
+            <Image source={saveIcon} />
+          </RectButton>
+
+          <Image style={styles.line} source={line} />
+
+          <RectButton
+            onPress={() => handleDeleteNote(data.id)}
+            style={styles.deleteIcon}
+          >
+            <Image source={deleteIcon} />
+          </RectButton>
         </View>
       </LinearGradient>
     </View>

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   content: {
@@ -10,15 +10,15 @@ const styles = StyleSheet.create({
   },
 
   topInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 37,
-    paddingVertical: 66,
+    paddingTop: 66,
   },
 
   titleNote: {
-    fontFamily: 'Overlock_700Bold',
-    color: '#061B50',
+    fontFamily: "Overlock_700Bold",
+    color: "#061B50",
     lineHeight: 37,
     fontSize: 30,
     left: 75,
@@ -27,26 +27,28 @@ const styles = StyleSheet.create({
   noteItem: {
     marginVertical: 58,
     paddingHorizontal: 37,
-    flexDirection: 'column',
-    alignItems: 'center',
+
+    width: "100%",
   },
 
   buttons: {
     marginTop: 20,
-    flexDirection: 'row',
-    backgroundColor: '#FFF',
+    maxWidth: "40%",
+    alignSelf: "center",
+    flexDirection: "row",
+    backgroundColor: "#FFF",
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 10,
   },
 
-  editIcon: {
+  saveIcon: {
     padding: 20,
     marginRight: 7,
   },
 
   line: {
-    height: '100%',
+    height: "100%",
   },
 
   deleteIcon: {
