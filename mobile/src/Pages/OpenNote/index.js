@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TextInput } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
@@ -10,6 +11,8 @@ import saveIcon from "../../../assets/checkmark-outline.png";
 import deleteIcon from "../../../assets/trash-outline.png";
 import line from "../../../assets/line.png";
 
+import Input from "../../components/Input";
+
 import styles from "./styles";
 import noteStyles from "../../styles/noteStyles";
 
@@ -17,20 +20,28 @@ export default function OpenNote() {
   const route = useRoute();
   const { navigate, goBack } = useNavigation();
 
-  const [data, setData] = useState([]);
-  const [newTitle, setNewTitle] = useState("");
-  const [newNote, setNewNote] = useState("");
+  const [dataInfo, setDataInfo] = useState({});
+  const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
 
   const routeParams = route.params;
 
   useEffect(() => {
     api.get(`notes/${routeParams.id}`).then((response) => {
-      setData(response.data);
+      setDataInfo(response.data);
+      setTitle(response.data.title);
+      setNote(response.data.note);
     });
   }, []);
 
-  if (!data.note && !data.title) {
+  if (!dataInfo) {
     return null;
+  }
+
+  async function handleSaveChanges(id) {
+    const response = await api.put(`notes/${id}`);
+    console.log(response.data);
+    //setDataInfo(response.data);
   }
 
   function handleGoBack() {
@@ -53,23 +64,20 @@ export default function OpenNote() {
             <Feather name="arrow-left" size={24} color="#061B50" />
           </RectButton>
 
-          <Text style={styles.titleNote}>Title note</Text>
+          <Text style={styles.titleNote}>Edit note</Text>
         </View>
 
         <View style={styles.noteItem}>
           <View style={noteStyles.contentNote}>
-            <TextInput
-              style={noteStyles.titleNote}
-              autoCorrect={false}
-              blurOnSubmit={false}
-              editable={true}
-              value={newTitle}
-              onChangeText={(text) => setNewTitle(text)}
-            >
-              {data.title}
-            </TextInput>
+            <View key={dataInfo.id} style={noteStyles.noteContent}>
+              <Input
+                editable={true}
+                value={title}
+                onChangeText={(text) => setTitle(text)}
+              >
+                {dataInfo.title}
+              </Input>
 
-            <View style={noteStyles.noteContent}>
               <TextInput
                 style={noteStyles.textNote}
                 multiline={true}
@@ -78,12 +86,11 @@ export default function OpenNote() {
                 blurOnSubmit={false}
                 editable={true}
                 textAlignVertical={"top"}
-                value={newNote}
-                onChangeText={(text) => setNewNote(text)}
               >
-                {data.note}
+                {dataInfo.note}
               </TextInput>
             </View>
+
             <View style={noteStyles.footer}>
               <Text style={noteStyles.hour}>19:03</Text>
               <Text style={noteStyles.date}>20/10/2019</Text>
@@ -93,7 +100,7 @@ export default function OpenNote() {
 
         <View style={styles.buttons}>
           <RectButton
-            onPress={() => handleEditNoteSave(data.id)}
+            onPress={() => handleSaveChanges(dataInfo.id)}
             style={styles.saveIcon}
           >
             <Image source={saveIcon} />
@@ -102,7 +109,7 @@ export default function OpenNote() {
           <Image style={styles.line} source={line} />
 
           <RectButton
-            onPress={() => handleDeleteNote(data.id)}
+            onPress={() => handleDeleteNote(dataInfo.id)}
             style={styles.deleteIcon}
           >
             <Image source={deleteIcon} />
