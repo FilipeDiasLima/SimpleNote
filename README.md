@@ -23,4 +23,36 @@
 
 # :computer: How to run
 
-The project is still being developed...
+```
+# Clone do repositório
+Faça o clone da aplicação
+$ git clone https://github.com/FilipeDiasLima/SimpleNote.git
+```
+
+## Rodando o server/API
+
+```
+# Navegue até a pasta server
+$ cd SimpleNote/server
+
+# Instale as dependencias
+$ yarn
+
+# Execute o comando
+$ yarn start
+```
+
+## Rodando o projeto mobile
+
+```
+# Para rodar aplicação mobile, será necessário o EXPO
+
+# Navegue até a pasta server
+$ cd SimpleNote/mobile
+
+# Instale as dependencias
+$ yarn
+
+# Execute o comando
+$ expo start
+```
